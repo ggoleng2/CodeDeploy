@@ -1,0 +1,21 @@
+services:
+  nginx:
+    image: 264696625942.dkr.ecr.ap-northeast-2.amazonaws.com/cli-compose-nginx:latest
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: web-logs
+        awslogs-region: ap-northeast-2
+        awslogs-stream-prefix: nginx
+    ports:
+      - 80:80
+  django:
+    image: 264696625942.dkr.ecr.ap-northeast-2.amazonaws.com/cli-compose-django:latest
+    command: uwsgi --ini uwsgi.ini --uid www-data --gid www-data
+    logging:
+      driver: awslogs
+      options:
+        awslogs-group: web-logs
+        awslogs-region: ap-northeast-2
+        awslogs-stream-prefix: django
+version: '3'
